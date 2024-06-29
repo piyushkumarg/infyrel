@@ -1,7 +1,15 @@
-export default function Home() {
+import SiteLayout from '@/layout/siteLayout';
+import { Home } from '@/components/home';
+import { Header, Footer } from '@/components/navigation';
+
+const HomePage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold">Welcome to Khel Mitra</h1>
-    </div>
+    <>
+      <Header />
+      <Home />
+      <Footer />
+    </>
   );
-}
+};
+
+export default HomePage;

@@ -14,6 +14,7 @@ Welcome to Khel Mitra, your ultimate gaming companion! Dive into a world of game
 To get started with Khel Mitra, follow these steps:
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/piyushkumarg/khel-mitra.git
    cd khel-mitra
