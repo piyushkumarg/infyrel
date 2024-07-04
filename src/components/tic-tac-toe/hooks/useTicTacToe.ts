@@ -1,55 +1,63 @@
 import { useState } from 'react';
-import { Level } from '../types/level.type';
+import { levelType, turnType } from '../types/level.type';
 
 const initialBoard = () => Array(9).fill(null);
 
+const WINNING_PATTERNS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+const calculateWinner = (currentBoard: Array<string | null>): string | null => {
+  for (let i = 0; i < WINNING_PATTERNS.length; i++) {
+    const [a, b, c] = WINNING_PATTERNS[i];
+
+    if (
+      currentBoard[a] &&
+      currentBoard[a] === currentBoard[b] &&
+      currentBoard[a] === currentBoard[c]
+    ) {
+      return currentBoard[a];
+    }
+  }
+
+  return null;
+};
+
+const chekWinProbability = (board: Array<string | null>, turn: string) => {
+  return WINNING_PATTERNS.some((pattern) =>
+    pattern.every((index) => board[index] === turn)
+  );
+};
+
 const useTicTacToe = () => {
   const [board, setboard] = useState(initialBoard());
-  const [isXNext, setisXNext] = useState(true);
+  const [turn, setTurn] = useState<turnType>('X');
 
-  const WINNING_PATTERNS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  const calculateWinner = (currentBoard: Array<number>) => {
-    for (let i = 0; i < WINNING_PATTERNS.length; i++) {
-      const [a, b, c] = WINNING_PATTERNS[i];
-
-      if (
-        currentBoard[a] &&
-        currentBoard[a] === currentBoard[b] &&
-        currentBoard[a] === currentBoard[c]
-      ) {
-        return currentBoard[a];
-      }
-    }
-
-    return null;
-  };
-
-  const handleClick = (i: number, player: number) => {
+  const handleClick = (index: number, turn: turnType) => {
     //check for winner
     const winner = calculateWinner(board);
-    if (winner || board[i]) return;
+    if (winner || board[index]) return;
 
     const newBoard = [...board];
-    newBoard[i] = isXNext ? 'x' : 'o';
+    newBoard[index] = turn;
     setboard(newBoard);
-    setisXNext(!isXNext);
+    setTurn(turn === 'X' ? 'O' : 'X');
   };
 
   const getComputerMove = (
     board: Array<string | null>,
-    medium: Level
+    level: levelType
   ): number => {
-    if (medium === 'easy') {
+    // console.log(`computer move ${level} & turn:${turn} & board ${board}`);
+    if (level === 'easy') {
+      // console.log('level easy');
       const emptySquares = board.reduce((acc, square, index) => {
         if (square === null) {
           acc.push(index);
@@ -59,30 +67,92 @@ const useTicTacToe = () => {
 
       const randomIndex = Math.floor(Math.random() * emptySquares.length);
       return emptySquares[randomIndex];
+    } else if (level === 'medium') {
+      // console.log('level medium');
+      const opponent = turn === 'X' ? 'O' : 'X';
+
+      // Check for a winning move
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          board[i] = turn;
+          if (chekWinProbability(board, turn)) {
+            // console.log(`move: ${turn} ${i} winning for me`);
+            board[i] = null;
+            return i;
+          }
+          board[i] = null;
+        }
+      }
+
+      // Check for a blocking move
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          board[i] = opponent;
+          if (chekWinProbability(board, opponent)) {
+            // console.log(`move: ${opponent} ${i} block win`);
+            board[i] = null;
+            return i;
+          }
+          board[i] = null;
+        }
+      }
+
+      // Pick a random available index
+      const emptySquares = board.reduce((acc, square, index) => {
+        if (square === null) {
+          acc.push(index);
+        }
+        return acc;
+      }, [] as number[]);
+
+      const randomIndex = Math.floor(Math.random() * emptySquares.length);
+      // console.log(`move random: ${turn} index: ${emptySquares[randomIndex]}`);
+      return emptySquares[randomIndex];
+    } else if (level === 'hard') {
+      // console.log('level hard');
+      return 0;
     }
-    return 0;
+    return 0; // should never happen
   };
 
-  const getStatusMessage = () => {
+  const getStatusMessage = (): {
+    winner: string | null;
+    draw: boolean;
+    turn: turnType;
+  } => {
     const winner = calculateWinner(board);
-    console.log(`winner ${winner}`);
-    if (winner) return `Player ${winner} wins!`;
-    if (!board.includes(null)) return `It's a draw!`;
 
-    return `Player ${isXNext ? 'X' : 'O'} turn`;
+    if (winner)
+      return {
+        winner,
+        draw: false,
+        turn,
+      };
+
+    if (!board.includes(null))
+      return {
+        winner: null,
+        draw: true,
+        turn,
+      };
+
+    return {
+      winner: null,
+      draw: false,
+      turn,
+    };
   };
 
   const resetGame = () => {
     setboard(initialBoard());
-    setisXNext(true);
+    setTurn('X');
   };
 
   return {
     board,
-    isXNext,
+    turn,
     setboard,
     handleClick,
-    calculateWinner,
     getStatusMessage,
     resetGame,
     getComputerMove,

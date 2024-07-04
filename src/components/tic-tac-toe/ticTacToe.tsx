@@ -1,47 +1,56 @@
 'use client';
 import { SiteLayout } from '@/layout';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useTicTacToe from './hooks/useTicTacToe';
-import { Level } from './types/level.type';
+import { gamePlayerType, levelType } from './types/level.type';
 
 const TicTacToe = () => {
-  const [player, setplayer] = useState<number>(0);
-  const [medium, setmedium] = useState<Level>(null);
+  const [gamePlayer, setGamePlayer] = useState<gamePlayerType>(null);
+  const [level, setLevel] = useState<levelType>(null);
+  const [player, setPlayer] = useState<any>({
+    X: 'Player A',
+    O: 'Player B',
+  });
 
   const {
     board,
-    isXNext,
+    turn,
     setboard,
     handleClick,
-    calculateWinner,
     getStatusMessage,
     resetGame,
     getComputerMove,
   } = useTicTacToe();
 
-  if (player === 1 && !isXNext) {
-    const i = getComputerMove(board, medium);
-    console.log(`computer move ${i}`);
-    handleClick(i, 1);
+  if (gamePlayer === 1 && turn === 'O') {
+    setTimeout(() => {
+      const index = getComputerMove(board, level);
+      handleClick(index, 'O');
+    }, 1000); // Delay of 1000 milliseconds (1 second)
   }
+
+  const response = getStatusMessage();
 
   return (
     <SiteLayout className="bg-slate-300 min-h-[90vh]">
       <div className="flex flex-col justify-center items-center gap-8 p-8">
         <h1 className="text-3xl font-bold">TicTacToe</h1>
 
-        {!player ? (
+        {!gamePlayer && (
           <>
             <div className="flex gap-4 text-white ">
               <button
-                onClick={() => setplayer(1)}
+                onClick={() => {
+                  setGamePlayer(1);
+                  setPlayer({ X: 'Player A', O: 'AI Player' });
+                }}
                 className="text-lg font-semibold shadow-md  rounded-xl bg-green-700 hover:bg-green-600 cursor-pointer px-4 py-2"
               >
                 1 Player Game
               </button>
-              {player !== 1 ? (
+              {gamePlayer !== 1 ? (
                 <button
-                  onClick={() => setplayer(2)}
+                  onClick={() => setGamePlayer(2)}
                   className="text-lg font-semibold shadow-md rounded-xl bg-green-700 hover:bg-green-600 cursor-pointer px-4 py-2"
                 >
                   2 Player Game
@@ -51,20 +60,18 @@ const TicTacToe = () => {
               )}
             </div>
           </>
-        ) : (
-          ''
         )}
 
-        {player === 1 && !medium ? (
+        {gamePlayer === 1 && !level && (
           <div className="flex gap-4">
             <button
-              onClick={() => setmedium('easy')}
+              onClick={() => setLevel('easy')}
               className="text-xl text-white font-medium bg-blue-600 px-8 py-2 rounded-md hover:bg-blue-500"
             >
               Esay
             </button>
             <button
-              onClick={() => alert('Will be available soon')}
+              onClick={() => setLevel('medium')}
               className="text-xl text-white font-medium bg-blue-600 px-8 py-2 rounded-md hover:bg-blue-500"
             >
               Medium
@@ -76,15 +83,26 @@ const TicTacToe = () => {
               Hard
             </button>
           </div>
-        ) : (
-          ''
         )}
 
-        {(player && medium) || player === 2 ? (
+        {(gamePlayer && level) || gamePlayer === 2 ? (
           <>
-            <div className="text-xl font-medium text-gray-800">
-              {getStatusMessage()}
-            </div>
+            <div className="text-xl font-medium text-gray-800"></div>
+            {response.draw && (
+              <div className="text-2xl font-medium text-gray-800">Draw</div>
+            )}
+
+            {!response.draw && response.winner && (
+              <div className="text-2xl font-medium text-gray-800">
+                {player[response.winner]} is winner
+              </div>
+            )}
+
+            {!response.draw && !response.winner && (
+              <div className="text-2xl font-medium text-gray-800">
+                {player[response.turn]} Turn
+              </div>
+            )}
 
             <div className="grid grid-cols-3 gap-4">
               {board.map((b, i) => {
@@ -95,7 +113,7 @@ const TicTacToe = () => {
                   >
                     <button
                       className="h-28 w-28 hover:animate-spin"
-                      onClick={() => handleClick(i, player)}
+                      onClick={() => handleClick(i, turn)}
                       disabled={b !== null}
                     >
                       {b}
@@ -109,8 +127,8 @@ const TicTacToe = () => {
               <button
                 className="text-lg text-white font-medium bg-blue-600 px-8 py-2 rounded-md hover:bg-blue-500"
                 onClick={() => {
-                  setplayer(0);
-                  setmedium(null);
+                  setGamePlayer(null);
+                  setLevel(null);
                 }}
               >
                 Go to Start
