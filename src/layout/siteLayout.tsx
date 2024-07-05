@@ -9,9 +9,7 @@ interface Props {
 
 const SiteLayout = ({ children, className }: Props) => {
   return (
-    <div
-      className={`flex flex-col justify-center items-center flex-grow ${className}`}
-    >
+    <div className={`flex flex-col items-center flex-grow ${className}`}>
       <div className="max-w-screen-2xl w-full">{children}</div>
     </div>
   );
