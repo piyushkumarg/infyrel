@@ -152,8 +152,8 @@ const TicTacToeContainer = () => {
                 Game Points {level ? '(' + level.toUpperCase() + ')' : ''}
               </h1>
               <p className="text-center">
-                {player.X || 'X'}: Points {response.score.X} & {player.O || 'O'}: Points{' '}
-                {response.score.O}
+                {player.X || 'X'}: Points {response.score.X} & {player.O || 'O'}
+                : Points {response.score.O}
               </p>
             </div>
             {response.draw && (
