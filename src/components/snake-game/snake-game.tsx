@@ -1,11 +1,11 @@
 import { SiteLayout } from '@/layout';
 
-const Sudoku = () => {
+const SnakeGame = () => {
   return (
     <SiteLayout className="bg-slate-300 min-h-[90vh]">
-      <div>Sudoku</div>
+      <div>Snake Game</div>
     </SiteLayout>
   );
 };
 
-export default Sudoku;
+export default SnakeGame;
