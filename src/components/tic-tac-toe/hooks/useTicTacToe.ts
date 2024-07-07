@@ -61,19 +61,79 @@ const useTicTacToe = () => {
     setTurn(turn === 'X' ? 'O' : 'X');
   };
 
+  const checkWinner = (board: Array<string | null>): string | null => {
+    for (let pattern of WINNING_PATTERNS) {
+      const [a, b, c] = pattern;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a];
+      }
+    }
+
+    if (board.every((cell) => cell !== null)) {
+      return 'tie';
+    }
+
+    return null;
+  };
+  // Minimax algorithm
+  const minimax = (
+    board: Array<string | null>,
+    depth: number,
+    isMaximizing: boolean,
+    player: string,
+    opponent: string
+  ): number => {
+    let scores = { [player]: 10, [opponent]: -10, tie: 0 };
+
+    const winner = checkWinner(board);
+
+    console.log(`Winner: ${winner} `);
+    if (winner !== null) {
+      return scores[winner];
+    }
+
+    if (isMaximizing) {
+      let bestScore = -Infinity;
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          board[i] = player;
+          let score = minimax(board, depth + 1, false, player, opponent);
+          board[i] = null;
+          bestScore = Math.max(score, bestScore);
+        }
+      }
+      return bestScore;
+    } else {
+      let bestScore = Infinity;
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          board[i] = opponent;
+          let score = minimax(board, depth + 1, true, player, opponent);
+          board[i] = null;
+          bestScore = Math.min(score, bestScore);
+        }
+      }
+      return bestScore;
+    }
+  };
+
+  const getEasyMove = (board: Array<string | null>) => {
+    const emptySquares = board.reduce((acc, square, index) => {
+      if (square === null) {
+        acc.push(index);
+      }
+      return acc;
+    }, [] as number[]);
+
+    const randomIndex = Math.floor(Math.random() * emptySquares.length);
+    return emptySquares[randomIndex];
+  };
+
   const getComputerMove = useCallback(
     (board: Array<string | null>, level: levelType): number => {
       // console.log(`computer move ${level} & turn:${turn} & board ${board}`);
       if (level === 'easy') {
-        const emptySquares = board.reduce((acc, square, index) => {
-          if (square === null) {
-            acc.push(index);
-          }
-          return acc;
-        }, [] as number[]);
-
-        const randomIndex = Math.floor(Math.random() * emptySquares.length);
-        return emptySquares[randomIndex];
+        return getEasyMove(board);
       } else if (level === 'medium') {
         // Check for a winning move
         for (let i = 0; i < board.length; i++) {
@@ -102,19 +162,36 @@ const useTicTacToe = () => {
         }
 
         // Pick a random available index
-        const emptySquares = board.reduce((acc, square, index) => {
-          if (square === null) {
-            acc.push(index);
-          }
-          return acc;
-        }, [] as number[]);
-
-        const randomIndex = Math.floor(Math.random() * emptySquares.length);
-        // console.log(`move random: ${turn} index: ${emptySquares[randomIndex]}`);
-        return emptySquares[randomIndex];
+        return getEasyMove(board);
       } else if (level === 'hard') {
-        // console.log('level hard');
-        return 0;
+        const player = 'O'; // Assume computer is 'O'
+        const opponent = 'X';
+        let bestScore = -Infinity;
+
+        let move = -1;
+
+        console.log(`computer move initial: ${move} score: ${bestScore}`);
+
+        for (let i = 0; i < board.length; i++) {
+          if (board[i] === null) {
+            board[i] = player;
+            let score = minimax(board, 0, false, player, opponent);
+            board[i] = null;
+            console.log(`**INSIDE BOARD: ${i} score: ${score}`);
+            if (score > bestScore) {
+              console.log(`**********computer move: ${i} score: ${score}`);
+              bestScore = score;
+              move = i;
+            }
+          }
+        }
+
+        if (move === -1) {
+          move = getEasyMove(board);
+        }
+
+        console.log(`computer move: ${move} score: ${bestScore}`);
+        return move;
       }
       return 0; // should never happen
     },

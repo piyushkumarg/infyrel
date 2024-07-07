@@ -107,7 +107,10 @@ const TicTacToeContainer = () => {
                 Medium
               </button>
               <button
-                onClick={() => alert('Will be available soon')}
+                onClick={() => {
+                  setLevel('hard');
+                  setIsStarted(true);
+                }}
                 className="sm:text-lg text-sm text-white font-medium bg-blue-600 px-8 py-2 rounded-md hover:bg-blue-500"
               >
                 Hard
