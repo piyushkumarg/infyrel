@@ -23,7 +23,8 @@ const useTicTacToe = () => {
   const [board, setboard] = useState(initialBoard()); // The current state of the game board
   const [turn, setTurn] = useState<turnType>('X'); // The current player's turn
   const [winner, setWinner] = useState<string | null>(null); // The winner of the game
-  const [scores, setScores] = useState<{ [key: string]: number }>({ // The scores of each player
+  const [scores, setScores] = useState<{ [key: string]: number }>({
+    // The scores of each player
     X: 0,
     O: 0,
   });
@@ -255,32 +256,31 @@ const useTicTacToe = () => {
         score: scores,
       };
 
-      return {
-        winner: null,
-        draw: false,
-        turn,
-        score: scores,
-      };
-    }, [winner, board, scores, turn]);
-  
-    const resetGame = () => {
-      setboard(initialBoard());
-      setWinner(null);
-      setTurn('X');
-    };
-  
     return {
-      board,
+      winner: null,
+      draw: false,
       turn,
-      setboard,
-      handleClick,
-      getStatusMessage,
-      resetGame,
-      getComputerMove,
-      winner,
-      setScores,
+      score: scores,
     };
+  }, [winner, board, scores, turn]);
+
+  const resetGame = () => {
+    setboard(initialBoard());
+    setWinner(null);
+    setTurn('X');
   };
-  
-  export default useTicTacToe;
-  
+
+  return {
+    board,
+    turn,
+    setboard,
+    handleClick,
+    getStatusMessage,
+    resetGame,
+    getComputerMove,
+    winner,
+    setScores,
+  };
+};
+
+export default useTicTacToe;
