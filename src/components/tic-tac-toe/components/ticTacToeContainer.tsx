@@ -26,6 +26,7 @@ const TicTacToeContainer = () => {
     getComputerMove,
   } = useTicTacToe();
 
+  // AI move after 1 second we select turn as 'O'
   if (gamePlayer === 1 && turn === 'O' && !winner) {
     setTimeout(() => {
       const index = getComputerMove(board, level);
