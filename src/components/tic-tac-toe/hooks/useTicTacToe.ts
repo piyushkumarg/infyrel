@@ -130,37 +130,36 @@ const useTicTacToe = () => {
     return emptySquares[randomIndex];
   }, []);
 
-  const getMediumMove = useCallback(
-    (board: Array<string | null>) => {
-      // Check for a winning move
-      for (let i = 0; i < board.length; i++) {
-        if (board[i] === null) {
-          board[i] = 'O';
-          if (chekWinProbability(board, 'O')) {
-            board[i] = null;
-            return i;
-          }
+  const getMediumMove = useCallback((board: Array<string | null>) => {
+    // Check for a winning move
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = 'O';
+        if (chekWinProbability(board, 'O')) {
+          // console.log(`move: ${"O"} ${i} winning for me`);
           board[i] = null;
+          return i;
         }
+        board[i] = null;
       }
+    }
 
-      // Check for a blocking move
-      for (let i = 0; i < board.length; i++) {
-        if (board[i] === null) {
-          board[i] = 'X';
-          if (chekWinProbability(board, 'X')) {
-            board[i] = null;
-            return i;
-          }
+    // Check for a blocking move
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = 'X';
+        if (chekWinProbability(board, 'X')) {
+          // console.log(`move: ${"X"} ${i} block win`);
           board[i] = null;
+          return i;
         }
+        board[i] = null;
       }
+    }
 
-      // Pick a random available index
-      return getEasyMove(board);
-    },
-    [getEasyMove]
-  );
+    // Pick a random available index
+    return getEasyMove(board);
+  }, []);
 
   const getHardMove = useCallback(
     (board: Array<string | null>) => {
@@ -219,7 +218,6 @@ const useTicTacToe = () => {
     }
   }, []);
 
-  // Update the score based on the winner of the game
   useEffect(() => {
     handleScore(winner);
   }, [winner]);
