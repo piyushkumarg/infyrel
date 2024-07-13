@@ -14,15 +14,21 @@ const WINNING_PATTERNS = [
   [2, 4, 6],
 ];
 
+/**
+ * Custom hook for Tic Tac Toe game.
+ * @returns Object containing game state and functions to manipulate it.
+ */
 const useTicTacToe = () => {
-  const [board, setboard] = useState(initialBoard());
-  const [turn, setTurn] = useState<turnType>('X');
-  const [winner, setWinner] = useState<string | null>(null);
-  const [socres, setScores] = useState<{ [key: string]: number }>({
+  // Initialize game state
+  const [board, setboard] = useState(initialBoard()); // The current state of the game board
+  const [turn, setTurn] = useState<turnType>('X'); // The current player's turn
+  const [winner, setWinner] = useState<string | null>(null); // The winner of the game
+  const [scores, setScores] = useState<{ [key: string]: number }>({ // The scores of each player
     X: 0,
     O: 0,
   });
 
+  // Checks if the current player has won the game
   const checkWinner = useCallback(
     (board: Array<string | null>): string | null => {
       for (let i = 0; i < WINNING_PATTERNS.length; i++) {
@@ -42,6 +48,7 @@ const useTicTacToe = () => {
     [board]
   );
 
+  // Checks if the current player has a winning move [used in medium level]
   const chekWinProbability = useCallback(
     (board: Array<string | null>, turn: string) => {
       return WINNING_PATTERNS.some((pattern) =>
@@ -51,9 +58,10 @@ const useTicTacToe = () => {
     []
   );
 
+  // Handles a player's move
   const handleClick = useCallback(
     (index: number, turn: turnType) => {
-      //check for winner
+      // Check for winner or occupied square
       if (winner || board[index]) return;
 
       const newBoard = [...board];
@@ -64,7 +72,7 @@ const useTicTacToe = () => {
     [board, winner]
   );
 
-  // Minimax algorithm
+  // Minimax algorithm for determining the computer's move [used in hard level]
   const minimax = useCallback(
     (
       board: Array<string | null>,
@@ -77,7 +85,6 @@ const useTicTacToe = () => {
 
       const winner = checkWinner(board);
 
-      // console.log(`Winner: ${winner} `);
       if (winner !== null) {
         return scores[winner];
       }
@@ -109,6 +116,7 @@ const useTicTacToe = () => {
     [checkWinner]
   );
 
+  // Functions for determining the computer's move based on different levels of difficulty
   const getEasyMove = useCallback((board: Array<string | null>) => {
     const emptySquares = board.reduce((acc, square, index) => {
       if (square === null) {
@@ -182,6 +190,7 @@ const useTicTacToe = () => {
     [getEasyMove]
   );
 
+  // Function for determining the computer's move based on the current level of difficulty
   const getComputerMove = useCallback(
     (board: Array<string | null>, level: levelType): number => {
       if (winner) return -1;
@@ -199,6 +208,7 @@ const useTicTacToe = () => {
     [getEasyMove, getMediumMove, getHardMove]
   );
 
+  // Function for updating the score of each player based on the winner of the game
   const handleScore = useCallback((winner: string | null) => {
     if (winner) {
       setScores((prevScores) => ({
@@ -208,10 +218,12 @@ const useTicTacToe = () => {
     }
   }, []);
 
+  // Update the score based on the winner of the game
   useEffect(() => {
     handleScore(winner);
   }, [winner]);
 
+  // Update the winner based on the current state of the game board
   useEffect(() => {
     const winner = checkWinner(board);
     if (winner && winner !== 'tie') {
@@ -219,6 +231,7 @@ const useTicTacToe = () => {
     }
   }, [checkWinner]);
 
+  // Function for retrieving the current status of the game
   const getStatusMessage = useCallback((): {
     winner: string | null;
     draw: boolean;
@@ -230,7 +243,7 @@ const useTicTacToe = () => {
         winner,
         draw: false,
         turn,
-        score: socres,
+        score: scores,
       };
     }
 
@@ -239,34 +252,35 @@ const useTicTacToe = () => {
         winner: null,
         draw: true,
         turn,
-        score: socres,
+        score: scores,
       };
 
-    return {
-      winner: null,
-      draw: false,
-      turn,
-      score: socres,
+      return {
+        winner: null,
+        draw: false,
+        turn,
+        score: scores,
+      };
+    }, [winner, board, scores, turn]);
+  
+    const resetGame = () => {
+      setboard(initialBoard());
+      setWinner(null);
+      setTurn('X');
     };
-  }, [winner, board, socres, turn]);
-
-  const resetGame = () => {
-    setboard(initialBoard());
-    setWinner(null);
-    setTurn('X');
+  
+    return {
+      board,
+      turn,
+      setboard,
+      handleClick,
+      getStatusMessage,
+      resetGame,
+      getComputerMove,
+      winner,
+      setScores,
+    };
   };
-
-  return {
-    board,
-    turn,
-    setboard,
-    handleClick,
-    getStatusMessage,
-    resetGame,
-    getComputerMove,
-    winner,
-    setScores,
-  };
-};
-
-export default useTicTacToe;
+  
+  export default useTicTacToe;
+  
