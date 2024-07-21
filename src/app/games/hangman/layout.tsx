@@ -1,4 +1,4 @@
-export default function SudokuLayout({
+export default function HangmanLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
