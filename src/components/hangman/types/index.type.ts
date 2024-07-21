@@ -1,3 +1,4 @@
+export type LevelType = 'easy' | 'medium' | 'hard';
 export interface HangmanWordInterface {
   guessedLetters: string[];
   wordToGuess: string;

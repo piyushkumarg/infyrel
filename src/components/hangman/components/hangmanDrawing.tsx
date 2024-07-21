@@ -92,7 +92,9 @@ const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG];
 export function HangmanDrawing({ numberOfGuesses }: HangmanDrawingInterface) {
   return (
     <div style={{ position: 'relative' }}>
-      {BODY_PARTS.slice(0, numberOfGuesses)}
+      {BODY_PARTS.slice(0, numberOfGuesses).map((part, index) => (
+        <div key={index}>{part}</div>
+      ))}
       <div
         style={{
           height: '30px',
@@ -106,20 +108,27 @@ export function HangmanDrawing({ numberOfGuesses }: HangmanDrawingInterface) {
       <div
         style={{
           height: '5px',
-          width: '150px',
+          width: '125px',
           background: 'black',
-          marginLeft: '120px',
+          marginLeft: '75px',
         }}
       />
       <div
         style={{
-          height: '300px',
+          height: '275px',
           width: '5px',
           background: 'black',
-          marginLeft: '120px',
+          marginLeft: '75px',
         }}
       />
-      <div style={{ height: '5px', width: '250px', background: 'black' }} />
+      <div
+        style={{
+          height: '5px',
+          width: '250px',
+          marginLeft: '-45px',
+          background: 'black',
+        }}
+      />
     </div>
   );
 }
