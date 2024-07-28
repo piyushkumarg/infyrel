@@ -1,11 +1,58 @@
 import { useCallback, useEffect, useState } from 'react';
 import words from './wordList.json';
-import { LevelType } from '../types/index.type';
+import { LevelType, scoreBoardInterface } from '../types/index.type';
+
+const intialScoreBoard: scoreBoardInterface = {
+  points: 0,
+  winCount: 0,
+  loseCount: 0,
+  totalWinCount: 0,
+  totalLoseCount: 0,
+};
 
 const useHangman = () => {
-  const [wordToGuess, setWordToGuess] = useState('');
+  const [wordToGuess, setWordToGuess] = useState('test');
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
-  const [level, setLevel] = useState<LevelType>('hard');
+  const [level, setLevel] = useState<LevelType>('easy');
+  const [scoreBoard, setScoreBoard] =
+    useState<scoreBoardInterface>(intialScoreBoard);
+
+  const incorrectLetters = guessedLetters.filter(
+    (letter) => !wordToGuess.includes(letter)
+  );
+
+  const isLoser = incorrectLetters.length >= 6;
+
+  const isWinner = wordToGuess
+    .split('')
+    .every((letter) => guessedLetters.includes(letter));
+
+  const calculateScoreBoard = useCallback(() => {
+    if (isWinner && !isLoser) {
+      setScoreBoard({
+        ...scoreBoard,
+        points: scoreBoard.points + 5,
+        winCount: scoreBoard.winCount + 1,
+        totalWinCount: scoreBoard.totalWinCount + 1,
+      });
+    } else if (isLoser && !isWinner) {
+      if (scoreBoard.loseCount === 3) {
+        setScoreBoard({
+          ...scoreBoard,
+          loseCount: 0,
+          points: scoreBoard.points - 1,
+          totalLoseCount: scoreBoard.totalLoseCount + 1,
+        });
+        return;
+      } else {
+        setScoreBoard({
+          ...scoreBoard,
+          loseCount: scoreBoard.loseCount + 1,
+          totalLoseCount: scoreBoard.totalLoseCount + 1,
+        });
+      }
+    }
+  }, [isWinner, isLoser]);
 
   const getWord = async () => {
     let filteredWords = [];
@@ -35,16 +82,6 @@ const useHangman = () => {
         return words[Math.floor(Math.random() * words.length)];
     }
   };
-
-  const incorrectLetters = guessedLetters.filter(
-    (letter) => !wordToGuess.includes(letter)
-  );
-
-  const isLoser = incorrectLetters.length >= 6;
-
-  const isWinner = wordToGuess
-    .split('')
-    .every((letter) => guessedLetters.includes(letter));
 
   const addGuessedLetter = useCallback(
     (letter: string) => {
@@ -136,6 +173,7 @@ const useHangman = () => {
 
   const handleChangeLevel = useCallback(
     async (level: LevelType) => {
+      setScoreBoard(intialScoreBoard);
       console.log('handleChangeLevel: ', level);
       switch (level) {
         case 'easy':
@@ -185,6 +223,10 @@ const useHangman = () => {
     handleChangeLevel(level);
   }, [level]);
 
+  useEffect(() => {
+    calculateScoreBoard();
+  }, [calculateScoreBoard]);
+
   console.log('render: ', guessedLetters, wordToGuess, level);
 
   return {
@@ -198,6 +240,7 @@ const useHangman = () => {
     addGuessedLetter,
     handleStartGame,
     handleChangeLevel,
+    scoreBoard,
   };
 };
 
