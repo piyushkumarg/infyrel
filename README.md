@@ -55,3 +55,10 @@ We welcome contributions! Please follow these steps to contribute:
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feature/your-feature`).
 6. Open a pull request.
+
+## Contributors
+
+<a href="https://github.com/piyushkumarg/khel-mitra/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=piyushkumarg/khel-mitra" />
+</a>
+
