@@ -15,3 +15,11 @@ export interface KeyboardInterface {
   inactiveLetters: string[];
   addGuessedLetter: (letter: string) => void;
 }
+
+export interface scoreBoardInterface {
+  points: number;
+  winCount: number;
+  loseCount: number;
+  totalWinCount: number;
+  totalLoseCount: number;
+}

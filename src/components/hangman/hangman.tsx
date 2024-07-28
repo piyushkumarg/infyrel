@@ -6,6 +6,7 @@ import { SiteLayout } from '@/layout';
 import useHangman from './hooks/useHangman';
 import { LevelType } from './types/index.type';
 import { useEffect, useState } from 'react';
+import HowToPlayHangman from './components/howToPlayHangman';
 
 function Hangman() {
   const levelArray = ['easy', 'medium', 'hard'];
@@ -20,15 +21,16 @@ function Hangman() {
     guessedLetters,
     addGuessedLetter,
     handleStartGame,
+    scoreBoard,
   } = useHangman();
 
   return (
     <SiteLayout className="min-h-[90vh]">
-      <div className="flex flex-col gap-4 md:p-8 p-4">
+      <div className="flex flex-col gap-4 md:p-8 p-4 justify-center items-center">
         <h1 className="text-3xl font-bold text-center">
           HANGMAN (Guess the word)
         </h1>
-        <div className="text-2xl text-center">
+        <div className="text-2xl">
           {isWinner && 'Winner! - Restart to try again'}
           {isLoser && 'Nice Try again! - Restart to try again'}
         </div>
@@ -52,7 +54,13 @@ function Hangman() {
           </select>
         </div>
 
-        <div className="flex lg:flex-row flex-col md:justify-between items-center pt-8 gap-4">
+        <div className="text-xl font-medium">
+          Points: {scoreBoard.points} | Total Win Count:{' '}
+          {scoreBoard.totalWinCount} | Total Lose Count:{' '}
+          {scoreBoard.totalLoseCount}
+        </div>
+
+        <div className="flex w-full lg:flex-row flex-col md:justify-between items-center pt-8 gap-4">
           <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
 
           <div className="flex flex-col gap-4 items-center">
@@ -79,6 +87,7 @@ function Hangman() {
             )}
           </div>
         </div>
+        <HowToPlayHangman />
       </div>
     </SiteLayout>
   );
