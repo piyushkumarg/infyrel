@@ -6,7 +6,17 @@ import Food from './Food';
 import useSnakeGame from '../hooks/useSnakeGame';
 
 const GameBoard: React.FC = () => {
-  const { snakeDots, food, handleKeyDown, toggleGame, isRunning, score, highScore, mode, setMode } = useSnakeGame('easy');
+  const {
+    snakeDots,
+    food,
+    handleKeyDown,
+    toggleGame,
+    isRunning,
+    score,
+    highScore,
+    mode,
+    setMode,
+  } = useSnakeGame('easy');
   const gameBoardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react';
 type GameMode = 'easy' | 'medium' | 'hard';
 
 const useSnakeGame = (initialMode: GameMode) => {
-  const [snakeDots, setSnakeDots] = useState([[0, 0], [2, 0]]);
+  const [snakeDots, setSnakeDots] = useState([
+    [0, 0],
+    [2, 0],
+  ]);
   const [food, setFood] = useState([6, 6]);
   const [direction, setDirection] = useState('RIGHT');
   const [speed, setSpeed] = useState(initialMode === 'hard' ? 100 : 200);
@@ -72,7 +75,10 @@ const useSnakeGame = (initialMode: GameMode) => {
 
     head = mode === 'easy' ? wrapToBorders(head) : head;
 
-    if (mode !== 'easy' && (head[0] >= 100 || head[0] < 0 || head[1] >= 100 || head[1] < 0)) {
+    if (
+      mode !== 'easy' &&
+      (head[0] >= 100 || head[0] < 0 || head[1] >= 100 || head[1] < 0)
+    ) {
       onGameOver();
       return;
     }
@@ -106,7 +112,7 @@ const useSnakeGame = (initialMode: GameMode) => {
     let snakeBody = [...snake];
     let head = snakeBody[snakeBody.length - 1];
     snakeBody.pop();
-    snakeBody.forEach(dot => {
+    snakeBody.forEach((dot) => {
       if (head[0] === dot[0] && head[1] === dot[1]) {
         onGameOver();
       }
@@ -140,7 +146,10 @@ const useSnakeGame = (initialMode: GameMode) => {
       setHighScore(score);
       localStorage.setItem('highScore', score.toString());
     }
-    setSnakeDots([[0, 0], [2, 0]]);
+    setSnakeDots([
+      [0, 0],
+      [2, 0],
+    ]);
     setFood(getRandomCoordinates());
     setDirection('RIGHT');
     setSpeed(mode === 'hard' ? 100 : 200);
