@@ -1,9 +1,13 @@
-import { SiteLayout } from '@/layout';
+'use client';
 
-const SnakeGame = () => {
+import React from 'react';
+import { SiteLayout } from '@/layout';
+import GameBoard from './components/GameBoard';
+
+const SnakeGame: React.FC = () => {
   return (
-    <SiteLayout className="bg-slate-300 min-h-[90vh]">
-      <div>Snake Game</div>
+    <SiteLayout className="flex flex-col justify-center items-center min-h-[90vh] bg-gray-200 bg-[url('/snakeGame/snakeBackground.jpg')] bg-cover bg-center p-4">
+      <GameBoard />
     </SiteLayout>
   );
 };
