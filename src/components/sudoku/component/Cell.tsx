@@ -14,9 +14,10 @@ const Cell: React.FC<CellProps> = ({ row, col, value, onChange }) => {
   };
 
   const getCellClass = () => {
-    let classes = "w-16 h-16 text-center text-3xl border border-gray-400 outline-none";
+    let classes =
+      'w-16 h-16 text-center text-3xl border border-gray-400 outline-none';
     if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) {
-      classes += " bg-gray-200";
+      classes += ' bg-gray-200';
     }
     return classes;
   };
@@ -28,7 +29,6 @@ const Cell: React.FC<CellProps> = ({ row, col, value, onChange }) => {
       onChange={handleChange}
       className={getCellClass()}
       maxLength={1}
-      
     />
   );
 };

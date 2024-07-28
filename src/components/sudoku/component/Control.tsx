@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState } from 'react';
 
 interface ControlsProps {
@@ -6,28 +5,30 @@ interface ControlsProps {
   onSolve: () => void;
 }
 
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react';
 
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
-
-const  Controls = ({ onNewGame, onSolve }:ControlsProps) =>{
-  const [selectedKeys, setSelectedKeys] =useState(new Set(["Level"]));
+const Controls = ({ onNewGame, onSolve }: ControlsProps) => {
+  const [selectedKeys, setSelectedKeys] = useState(new Set(['Level']));
 
   const selectedValue = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    () => Array.from(selectedKeys).join(', ').replaceAll('_', ' '),
     [selectedKeys]
   );
 
   return (
-    <Dropdown >
+    <Dropdown>
       <DropdownTrigger>
-        <Button 
-          variant="bordered" 
-          className="capitalize"
-        >
+        <Button variant="bordered" className="capitalize">
           {selectedValue}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu 
+      <DropdownMenu
         aria-label="Single selection example"
         variant="flat"
         disallowEmptySelection
@@ -35,12 +36,18 @@ const  Controls = ({ onNewGame, onSolve }:ControlsProps) =>{
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys as any}
       >
-        <DropdownItem onClick={() => onNewGame('easy')} key="Easy">Easy</DropdownItem>
-        <DropdownItem onClick={()=>onNewGame('medium')} key="Medium">Medium</DropdownItem>
-        <DropdownItem onClick={()=>onNewGame('hard')} key="Hard">Hard</DropdownItem>
+        <DropdownItem onClick={() => onNewGame('easy')} key="Easy">
+          Easy
+        </DropdownItem>
+        <DropdownItem onClick={() => onNewGame('medium')} key="Medium">
+          Medium
+        </DropdownItem>
+        <DropdownItem onClick={() => onNewGame('hard')} key="Hard">
+          Hard
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
-}
+};
 
-export default Controls
+export default Controls;
