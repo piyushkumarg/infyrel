@@ -166,14 +166,14 @@ const Sudoku: NextPage = () => {
                 <h2 className="text-2xl font-bold text-green-600">
                   Congratulations!
                 </h2>
-                <p className="text-sm">You've won the game!</p>
+                <p className="text-sm">You&apos;ve won the game!</p>
               </div>
             )}
             {gameStatus === 'lost' && (
               <div className="text-center ">
                 <h2 className="text-3xl font-bold text-red-600">Game Over</h2>
                 <p className="text-lg mt-1">
-                  You've made too many mistakes. Try again!
+                  You&apos;ve made too many mistakes. Try again!
                 </p>
               </div>
             )}
