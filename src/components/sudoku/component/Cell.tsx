@@ -6,6 +6,7 @@ interface CellProps {
   value: number;
   onChange: (row: number, col: number, value: number) => void;
 }
+//
 
 const Cell: React.FC<CellProps> = ({ row, col, value, onChange }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
