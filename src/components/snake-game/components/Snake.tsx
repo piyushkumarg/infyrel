@@ -10,7 +10,7 @@ const Snake: React.FC<SnakeProps> = ({ snakeDots }) => {
       {snakeDots.map((dot, i) => (
         <div
           key={i}
-          className="absolute bg-black"
+          className={`absolute bg-black ${i === snakeDots.length - 1 ? 'bg-red-600' : ''}`}
           style={{
             left: `${dot[0]}%`,
             top: `${dot[1]}%`,

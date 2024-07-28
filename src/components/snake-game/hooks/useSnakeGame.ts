@@ -1,19 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 
-type GameMode = 'easy' | 'medium' | 'hard';
+export type GameModeType = 'easy' | 'medium' | 'hard';
 
-const useSnakeGame = (initialMode: GameMode) => {
+const useSnakeGame = (gameBoardRef: React.RefObject<HTMLDivElement>) => {
   const [snakeDots, setSnakeDots] = useState([
     [0, 0],
     [2, 0],
   ]);
+  const [mode, setMode] = useState<GameModeType>('easy');
   const [food, setFood] = useState([6, 6]);
   const [direction, setDirection] = useState('RIGHT');
-  const [speed, setSpeed] = useState(initialMode === 'hard' ? 100 : 200);
   const [isRunning, setIsRunning] = useState(false);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const [mode, setMode] = useState<GameMode>(initialMode);
+  const [speed, setSpeed] = useState(mode === 'hard' ? 100 : 200);
 
   const enlargeSnake = useCallback(() => {
     setSnakeDots((prevSnakeDots) => {
@@ -142,7 +142,19 @@ const useSnakeGame = (initialMode: GameMode) => {
       }, speed);
     }
     return () => clearInterval(moveSnake);
-  }, [direction, isRunning, mode, speed, wrapToBorders, onGameOver, enlargeSnake, increaseSpeed, getRandomCoordinates, food, score]);
+  }, [
+    direction,
+    isRunning,
+    mode,
+    speed,
+    wrapToBorders,
+    onGameOver,
+    enlargeSnake,
+    increaseSpeed,
+    getRandomCoordinates,
+    food,
+    score,
+  ]);
 
   useEffect(() => {
     setSpeed(mode === 'hard' ? 100 : 200);
@@ -167,6 +179,9 @@ const useSnakeGame = (initialMode: GameMode) => {
   };
 
   const toggleGame = () => {
+    if (gameBoardRef.current) {
+      gameBoardRef.current.focus();
+    }
     setIsRunning((prevIsRunning) => !prevIsRunning);
   };
 

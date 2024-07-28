@@ -1,9 +1,7 @@
-import React from 'react';
-
 interface FoodProps {
   dot: number[];
 }
-//
+
 const Food: React.FC<FoodProps> = ({ dot }) => {
   return (
     <div
