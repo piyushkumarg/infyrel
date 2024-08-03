@@ -28,7 +28,6 @@ const CandyCrush = () => {
           dragOrTouchEnd={dragOrTouchEnd}
           touchStart={touchStart}
           touchMove={touchMove}
-        
         />
       </div>
     </SiteLayout>
