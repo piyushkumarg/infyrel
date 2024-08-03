@@ -61,4 +61,3 @@ We welcome contributions! Please follow these steps to contribute:
 <a href="https://github.com/piyushkumarg/khel-mitra/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=piyushkumarg/khel-mitra" />
 </a>
-

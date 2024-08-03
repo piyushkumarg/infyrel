@@ -1,4 +1,3 @@
-
 import { Footer, Header } from '@/components/navigation';
 import { CandyCrush } from '@/components/candy-crush';
 
