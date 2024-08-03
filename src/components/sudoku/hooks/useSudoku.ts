@@ -188,8 +188,7 @@ const useSudoku = () => {
     setMistakes(0);
     setGameStatus('playing');
     setTimer(0); // Reset timer when starting a new game
-};
-
+  };
 
   const handleSolve = () => {
     const solvedBoard = board.map((row) => row.slice());

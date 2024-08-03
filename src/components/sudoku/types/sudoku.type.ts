@@ -7,14 +7,14 @@ export interface CellProps {
   row: number;
   col: number;
   value: number;
-  rowIndex:number;
-  colIndex:number;
-  originalBoard:number[][];
+  rowIndex: number;
+  colIndex: number;
+  originalBoard: number[][];
   onChange: (row: number, col: number, value: number) => void;
 }
 
 export interface BoardProps {
-    board: number[][];
-    originalBoard: number[][];
-    onCellChange: (row: number, col: number, value: number) => void;
+  board: number[][];
+  originalBoard: number[][];
+  onCellChange: (row: number, col: number, value: number) => void;
 }

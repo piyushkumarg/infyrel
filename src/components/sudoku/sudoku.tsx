@@ -24,7 +24,7 @@ const Sudoku: NextPage = () => {
     handleNewGame,
     handleSolve,
     isOpen,
-      originalBoard,
+    originalBoard,
     setIsOpen,
     formatTime,
   } = useSudoku();
@@ -43,7 +43,11 @@ const Sudoku: NextPage = () => {
               Time: <span className="text-blue-500">{formatTime(timer)}</span>{' '}
             </div>
           </div>
-          <Board board={board}  originalBoard={originalBoard} onCellChange={handleCellChange} />
+          <Board
+            board={board}
+            originalBoard={originalBoard}
+            onCellChange={handleCellChange}
+          />
         </div>
         <Controls onNewGame={handleNewGame} onSolve={handleSolve} />
       </div>

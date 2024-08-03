@@ -1,7 +1,15 @@
 import React from 'react';
 import { CellProps } from '../types/sudoku.type';
 
-const Cell: React.FC<CellProps> = ({ row, col, value,rowIndex,colIndex , originalBoard, onChange }) => {
+const Cell: React.FC<CellProps> = ({
+  row,
+  col,
+  value,
+  rowIndex,
+  colIndex,
+  originalBoard,
+  onChange,
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value) || 0;
     onChange(row, col, newValue);
@@ -23,8 +31,9 @@ const Cell: React.FC<CellProps> = ({ row, col, value,rowIndex,colIndex , origina
       onChange={handleChange}
       className={getCellClass()}
       maxLength={1}
-      disabled={originalBoard[rowIndex] && originalBoard[rowIndex][colIndex] !== 0}
-      
+      disabled={
+        originalBoard[rowIndex] && originalBoard[rowIndex][colIndex] !== 0
+      }
     />
   );
 };
