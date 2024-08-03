@@ -1,8 +1,6 @@
 import React from 'react';
 import { CellProps } from '../types/sudoku.type';
 
-
-
 const Cell: React.FC<CellProps> = ({ row, col, value, onChange }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value) || 0;

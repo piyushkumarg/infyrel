@@ -8,8 +8,6 @@ import {
 } from '@nextui-org/react';
 import { ControlsProps } from '../types/sudoku.type';
 
-
-
 const Controls: React.FC<ControlsProps> = ({ onNewGame, onSolve }) => {
   const [selectedKeys, setSelectedKeys] = useState(new Set(['Level']));
 
