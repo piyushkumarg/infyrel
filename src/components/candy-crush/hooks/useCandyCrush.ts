@@ -49,6 +49,7 @@ const useCandyCrush = () => {
         return true;
       }
     }
+    return false;
   };
 
   const checkForRowOfFour = () => {
@@ -77,6 +78,7 @@ const useCandyCrush = () => {
         return true;
       }
     }
+    return false;
   };
 
   const checkForColumnOfThree = () => {
@@ -98,6 +100,7 @@ const useCandyCrush = () => {
         return true;
       }
     }
+    return false;
   };
 
   const checkForRowOfThree = () => {
@@ -124,6 +127,7 @@ const useCandyCrush = () => {
         return true;
       }
     }
+    return false;
   };
 
   const moveIntoSquareBelow = () => {
@@ -158,10 +162,11 @@ const useCandyCrush = () => {
     const squareBeingDraggedID = Number(
       squareBeingDragged?.getAttribute('data-id')
     );
-
     const squareBeingReplacedID = Number(
       squareBeingReplaced?.getAttribute('data-id')
     );
+
+    if (squareBeingDraggedID === squareBeingReplacedID) return;
 
     console.log(
       'SquareBeingDraggedID',
@@ -174,11 +179,6 @@ const useCandyCrush = () => {
       squareBeingReplacedID
     );
 
-    currentColorArrangement[squareBeingReplacedID] =
-      squareBeingDragged?.getAttribute('src')!;
-    currentColorArrangement[squareBeingDraggedID] =
-      squareBeingReplaced?.getAttribute('src')!;
-
     const validMoves = [
       squareBeingDraggedID - 1,
       squareBeingDraggedID - width,
@@ -188,18 +188,26 @@ const useCandyCrush = () => {
 
     const validMove = validMoves.includes(squareBeingReplacedID);
 
+    if (!validMove) {
+      setSquareBeingDragged(null);
+      setSquareBeingReplaced(null);
+      return;
+    }
+
+    currentColorArrangement[squareBeingReplacedID] =
+      squareBeingDragged?.getAttribute('src')!;
+    currentColorArrangement[squareBeingDraggedID] =
+      squareBeingReplaced?.getAttribute('src')!;
+
     const isAColumnOfFour = checkForColumnOfFour();
     const isARowOfFour = checkForRowOfFour();
     const isAColumnOfThree = checkForColumnOfThree();
     const isARowOfThree = checkForRowOfThree();
 
-    if (
-      squareBeingReplacedID &&
-      validMove &&
-      (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree)
-    ) {
+    if (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree) {
       setSquareBeingDragged(null);
       setSquareBeingReplaced(null);
+      setCurrentColorArrangement([...currentColorArrangement]);
     } else {
       currentColorArrangement[squareBeingReplacedID] =
         squareBeingReplaced?.getAttribute('src')!;
@@ -209,7 +217,7 @@ const useCandyCrush = () => {
     }
   };
 
-  //For touch screen support
+  // For touch screen support
   const touchStart = (e: TouchEvent<HTMLImageElement>) => {
     console.log('Touch Start', e);
     setSquareBeingDragged(e.target as HTMLImageElement);
@@ -238,14 +246,7 @@ const useCandyCrush = () => {
       setCurrentColorArrangement([...currentColorArrangement]);
     }, 100);
     return () => clearInterval(timer);
-  }, [
-    checkForColumnOfFour,
-    checkForRowOfFour,
-    checkForColumnOfThree,
-    checkForRowOfThree,
-    moveIntoSquareBelow,
-    currentColorArrangement,
-  ]);
+  }, [currentColorArrangement]);
 
   return {
     scoreDisplay,

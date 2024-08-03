@@ -6,7 +6,7 @@ export default function CandyCrushLayout({
   return (
     <html lang="en">
       <head>
-        <title>Hangman Game</title>
+        <title>Candy Crush</title>
         <meta name="description" content="Candy Crush " />
       </head>
       <body>{children}</body>
