@@ -1,14 +1,14 @@
 import { useState, useEffect, DragEvent, TouchEvent } from 'react';
 const width = 8;
 const candyColors = [
-  '/candy-crush/blue-candy.png',
-  '/candy-crush/orange-candy.png',
-  '/candy-crush/purple-candy.png',
-  '/candy-crush/red-candy.png',
-  '/candy-crush/yellow-candy.png',
-  '/candy-crush/green-candy.png',
+  '/images/candy-crush/blue-candy.png',
+  '/images/candy-crush/orange-candy.png',
+  '/images/candy-crush/purple-candy.png',
+  '/images/candy-crush/red-candy.png',
+  '/images/candy-crush/yellow-candy.png',
+  '/images/candy-crush/green-candy.png',
 ];
-const blank = '/candy-crush/blank.png';
+const blank = '/images/candy-crush/blank.png';
 
 const useCandyCrush = () => {
   const [currentColorArrangement, setCurrentColorArrangement] = useState<
