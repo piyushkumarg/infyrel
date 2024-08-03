@@ -9,7 +9,9 @@ const CandyCrush = () => {
     currentColorArrangement,
     dragStart,
     dragDrop,
-    dragEnd,
+    dragOrTouchEnd,
+    touchStart,
+    touchMove,
   } = useCandyCrush();
 
   //console.log(currentColorArrangement)
@@ -23,7 +25,10 @@ const CandyCrush = () => {
           currentColorArrangement={currentColorArrangement}
           dragStart={dragStart}
           dragDrop={dragDrop}
-          dragEnd={dragEnd}
+          dragOrTouchEnd={dragOrTouchEnd}
+          touchStart={touchStart}
+          touchMove={touchMove}
+        
         />
       </div>
     </SiteLayout>

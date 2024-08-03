@@ -1,4 +1,4 @@
-import { useState, useEffect, DragEvent } from 'react';
+import { useState, useEffect, DragEvent, TouchEvent } from 'react';
 const width = 8;
 const candyColors = [
   '/candy-crush/blue-candy.png',
@@ -153,7 +153,7 @@ const useCandyCrush = () => {
     setSquareBeingReplaced(e.target as HTMLImageElement);
   };
 
-  const dragEnd = (e: DragEvent<HTMLImageElement>) => {
+  const dragOrTouchEnd = () => {
     console.log('Drag End');
     const squareBeingDraggedID = Number(
       squareBeingDragged?.getAttribute('data-id')
@@ -209,6 +209,21 @@ const useCandyCrush = () => {
     }
   };
 
+  //For touch screen support
+  const touchStart = (e: TouchEvent<HTMLImageElement>) => {
+    console.log('Touch Start', e);
+    setSquareBeingDragged(e.target as HTMLImageElement);
+  };
+
+  const touchMove = (e: TouchEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (target && target.getAttribute('data-id')) {
+      setSquareBeingReplaced(target as HTMLImageElement);
+    }
+  };
+
   useEffect(() => {
     createBoard();
   }, []);
@@ -237,7 +252,9 @@ const useCandyCrush = () => {
     currentColorArrangement,
     dragStart,
     dragDrop,
-    dragEnd,
+    dragOrTouchEnd,
+    touchStart,
+    touchMove,
   };
 };
 
