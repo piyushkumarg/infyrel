@@ -183,13 +183,13 @@ const useSudoku = () => {
   const handleNewGame = (difficulty: 'easy' | 'medium' | 'hard') => {
     const newBoard = generateSudoku(difficulty);
     setBoard(newBoard);
-    setOriginalBoard(newBoard.map((row) => row.slice()));
+    setOriginalBoard(newBoard.map((row) => row.slice())); // Ensure this is defined properly
     setErrorMessage(null);
     setMistakes(0);
     setGameStatus('playing');
-    setTimer(0);
-    setIsOpen(false);
-  };
+    setTimer(0); // Reset timer when starting a new game
+};
+
 
   const handleSolve = () => {
     const solvedBoard = board.map((row) => row.slice());
