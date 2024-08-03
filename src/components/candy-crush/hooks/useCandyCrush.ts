@@ -19,6 +19,9 @@ const useCandyCrush = () => {
     useState<HTMLImageElement | null>(null);
   const [squareBeingReplaced, setSquareBeingReplaced] =
     useState<HTMLImageElement | null>(null);
+  const [draggingElementStyles, setDraggingElementStyles] = useState<{
+    [key: string]: string;
+  }>({});
 
   const createBoard = () => {
     const randomColorManagement = [];
@@ -191,6 +194,7 @@ const useCandyCrush = () => {
     if (!validMove) {
       setSquareBeingDragged(null);
       setSquareBeingReplaced(null);
+      setDraggingElementStyles({});
       return;
     }
 
@@ -207,6 +211,7 @@ const useCandyCrush = () => {
     if (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree) {
       setSquareBeingDragged(null);
       setSquareBeingReplaced(null);
+      setDraggingElementStyles({});
       setCurrentColorArrangement([...currentColorArrangement]);
     } else {
       currentColorArrangement[squareBeingReplacedID] =
@@ -214,6 +219,7 @@ const useCandyCrush = () => {
       currentColorArrangement[squareBeingDraggedID] =
         squareBeingDragged?.getAttribute('src')!;
       setCurrentColorArrangement([...currentColorArrangement]);
+      setDraggingElementStyles({});
     }
   };
 
@@ -230,6 +236,13 @@ const useCandyCrush = () => {
     if (target && target.getAttribute('data-id')) {
       setSquareBeingReplaced(target as HTMLImageElement);
     }
+
+    setDraggingElementStyles({
+      position: 'absolute',
+      left: `${touch.clientX - 35}px`,
+      top: `${touch.clientY - 35}px`,
+      pointerEvents: 'none',
+    });
   };
 
   useEffect(() => {
@@ -256,6 +269,8 @@ const useCandyCrush = () => {
     dragOrTouchEnd,
     touchStart,
     touchMove,
+    draggingElementStyles,
+    squareBeingDragged,
   };
 };
 
