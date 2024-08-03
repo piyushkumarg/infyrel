@@ -30,7 +30,7 @@ const GameBoard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-[90vh] bg-gray-200 bg-[url('/snakeGame/snakeBackground.jpg')] bg-cover bg-center">
+    <div className="flex flex-col justify-center items-center sm:pt-8">
       <div className="text-2xl mb-5 flex justify-between max-w-[550px] w-full">
         <div>Score: {score}</div>
         <div>High Score: {highScore}</div>
