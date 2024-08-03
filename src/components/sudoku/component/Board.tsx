@@ -1,14 +1,12 @@
 import React from 'react';
 import Cell from './Cell';
+import { BoardProps } from '../types/sudoku.type';
 
-interface BoardProps {
-  board: number[][];
-  onChange: (row: number, col: number, value: number) => void;
-}
 
-const Board: React.FC<BoardProps> = ({ board, onChange }) => {
+
+const Board: React.FC<BoardProps> = ({ board, onCellChange }) => {
   return (
-    <div className="grid grid-cols-9  bg-black">
+    <div className="grid grid-cols-9 bg-black">
       {board.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <Cell
@@ -16,7 +14,7 @@ const Board: React.FC<BoardProps> = ({ board, onChange }) => {
             row={rowIndex}
             col={colIndex}
             value={cell}
-            onChange={onChange}
+            onChange={onCellChange}
           />
         ))
       )}
