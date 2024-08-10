@@ -16,7 +16,8 @@ const Cell: React.FC<CellProps> = ({
   };
 
   const getCellClass = () => {
-    let classes = 'w-full aspect-square text-center text-base sm:text-lg  lg:text-2xl border border-gray-400 focus:bg-gray-600/15 outline-none md:font-semibold text-balck/20 transition-all duration-300';
+    let classes =
+      'w-full aspect-square text-center text-base sm:text-lg  lg:text-2xl border border-gray-400 focus:bg-gray-600/15 outline-none md:font-semibold text-balck/20 transition-all duration-300';
     if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) {
       classes += ' bg-gray-100';
     }

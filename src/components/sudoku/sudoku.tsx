@@ -32,28 +32,27 @@ const Sudoku: NextPage = () => {
   return (
     <SiteLayout className=" max-w-screen-sm lg:max-w-screen-md md:mx-auto  flex flex-col items-center md:justify-center px-4 py-[10px] min-h-[calc(100vh-80px)] ">
       <div className=" flex flex-col md:flex-row gap-2 md:gap-4">
-        <div className='flex flex-col justify-center w-full  order-1 md:order-none '>
-
-
-        <div className="flex justify-between items-center mb-1 md:mb-2  font-bold ">
-          <div className=" text-xs md:text-sm lg:text-base font-bold">
-            Mistakes: <span className="text-red-500">{mistakes}</span> / 3
+        <div className="flex flex-col justify-center w-full  order-1 md:order-none ">
+          <div className="flex justify-between items-center mb-1 md:mb-2  font-bold ">
+            <div className=" text-xs md:text-sm lg:text-base font-bold">
+              Mistakes: <span className="text-red-500">{mistakes}</span> / 3
+            </div>
+            <div className=" text-xs md:text-sm lg:text-base font-bold">
+              Score: {score}
+            </div>{' '}
+            {/* Display score */}
+            <div className=" text-xs md:text-sm lg:text-base font-bold ">
+              Time: <span className="text-blue-500">{formatTime(timer)}</span>{' '}
+            </div>
           </div>
-          <div className=" text-xs md:text-sm lg:text-base font-bold">Score: {score}</div>{' '}
-          {/* Display score */}
-          <div className=" text-xs md:text-sm lg:text-base font-bold ">
-            Time: <span className="text-blue-500">{formatTime(timer)}</span>{' '}
-          </div>
-        </div>
 
-
-        <Board
-          board={board}
-          originalBoard={originalBoard}
-          onCellChange={handleCellChange}
+          <Board
+            board={board}
+            originalBoard={originalBoard}
+            onCellChange={handleCellChange}
           />
-          </div>
-      <Controls onNewGame={handleNewGame} onSolve={handleSolve} />
+        </div>
+        <Controls onNewGame={handleNewGame} onSolve={handleSolve} />
       </div>
 
       <Modal

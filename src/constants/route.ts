@@ -16,4 +16,8 @@ export const RouteContent = [
     path: '/games/hangman',
     title: 'Hangman Game',
   },
+  {
+    path: '/games/candy-crush',
+    title: 'Candy Crush',
+  },
 ];
