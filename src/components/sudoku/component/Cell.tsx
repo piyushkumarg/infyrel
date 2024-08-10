@@ -1,17 +1,24 @@
 import React from 'react';
 import { CellProps } from '../types/sudoku.type';
 
-const Cell: React.FC<CellProps> = ({ row, col, value,rowIndex,colIndex , originalBoard, onChange }) => {
+const Cell: React.FC<CellProps> = ({
+  row,
+  col,
+  value,
+  rowIndex,
+  colIndex,
+  originalBoard,
+  onChange,
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value) || 0;
     onChange(row, col, newValue);
   };
 
   const getCellClass = () => {
-    let classes =
-      'w-16 h-16 text-center text-3xl border border-gray-400 outline-none';
+    let classes = 'w-full aspect-square text-center text-base sm:text-lg  lg:text-2xl border border-gray-400 focus:bg-gray-600/15 outline-none md:font-semibold text-balck/20 transition-all duration-300';
     if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) {
-      classes += ' bg-gray-200';
+      classes += ' bg-gray-100';
     }
     return classes;
   };
@@ -23,8 +30,9 @@ const Cell: React.FC<CellProps> = ({ row, col, value,rowIndex,colIndex , origina
       onChange={handleChange}
       className={getCellClass()}
       maxLength={1}
-      disabled={originalBoard[rowIndex] && originalBoard[rowIndex][colIndex] !== 0}
-      
+      disabled={
+        originalBoard[rowIndex] && originalBoard[rowIndex][colIndex] !== 0
+      }
     />
   );
 };

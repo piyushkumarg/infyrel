@@ -24,28 +24,36 @@ const Sudoku: NextPage = () => {
     handleNewGame,
     handleSolve,
     isOpen,
-      originalBoard,
+    originalBoard,
     setIsOpen,
     formatTime,
   } = useSudoku();
 
   return (
-    <SiteLayout className="min-h-screen flex flex-col items-center justify-center">
-      <div className="flex justify-center gap-16">
-        <div className="max-w-[563px]">
-          <div className="flex justify-between items-center text-lg font-bold">
-            <div className="mb-4 text-xl font-bold">
-              Mistakes: <span className="text-red-500">{mistakes}</span> / 3
-            </div>
-            <div className="mb-4 text-xl font-bold">Score: {score}</div>{' '}
-            {/* Display score */}
-            <div className="mb-4 text-xl font-bold ">
-              Time: <span className="text-blue-500">{formatTime(timer)}</span>{' '}
-            </div>
+    <SiteLayout className=" max-w-screen-sm lg:max-w-screen-md md:mx-auto  flex flex-col items-center md:justify-center px-4 py-[10px] min-h-[calc(100vh-80px)] ">
+      <div className=" flex flex-col md:flex-row gap-2 md:gap-4">
+        <div className='flex flex-col justify-center w-full  order-1 md:order-none '>
+
+
+        <div className="flex justify-between items-center mb-1 md:mb-2  font-bold ">
+          <div className=" text-xs md:text-sm lg:text-base font-bold">
+            Mistakes: <span className="text-red-500">{mistakes}</span> / 3
           </div>
-          <Board board={board}  originalBoard={originalBoard} onCellChange={handleCellChange} />
+          <div className=" text-xs md:text-sm lg:text-base font-bold">Score: {score}</div>{' '}
+          {/* Display score */}
+          <div className=" text-xs md:text-sm lg:text-base font-bold ">
+            Time: <span className="text-blue-500">{formatTime(timer)}</span>{' '}
+          </div>
         </div>
-        <Controls onNewGame={handleNewGame} onSolve={handleSolve} />
+
+
+        <Board
+          board={board}
+          originalBoard={originalBoard}
+          onCellChange={handleCellChange}
+          />
+          </div>
+      <Controls onNewGame={handleNewGame} onSolve={handleSolve} />
       </div>
 
       <Modal
