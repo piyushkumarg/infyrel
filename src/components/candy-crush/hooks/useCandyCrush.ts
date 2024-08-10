@@ -237,6 +237,32 @@ const useCandyCrush = () => {
       setSquareBeingReplaced(target as HTMLImageElement);
     }
 
+    const squareBeingDraggedID = Number(
+      squareBeingDragged?.getAttribute('data-id')
+    );
+    const squareBeingReplacedID = Number(
+      squareBeingReplaced?.getAttribute('data-id')
+    );
+
+    if (squareBeingDraggedID === squareBeingReplacedID) return;
+
+    const validMoves = [
+      squareBeingDraggedID - 1,
+      squareBeingDraggedID - width,
+      squareBeingDraggedID + 1,
+      squareBeingDraggedID + width,
+    ];
+
+    const validMove = validMoves.includes(squareBeingReplacedID);
+
+    if (!validMove) {
+      setDraggingElementStyles({
+        ...draggingElementStyles,
+        display: 'none',
+      });
+      return;
+    }
+
     setDraggingElementStyles({
       position: 'absolute',
       left: `${touch.clientX - 35}px`,
