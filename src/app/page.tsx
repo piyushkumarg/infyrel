@@ -3,11 +3,11 @@ import { Header, Footer } from '@/components/navigation';
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <Header />
       <Home />
       <Footer />
-    </div>
+    </>
   );
 };
 
