@@ -17,38 +17,48 @@ const Controls: React.FC<ControlsProps> = ({ onNewGame, onSolve }) => {
   );
 
   return (
-    <div className="flex flex-col items-center mt-4">
-      <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
-            {selectedValue}
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Single selection example"
-          variant="flat"
-          disallowEmptySelection
-          selectionMode="single"
-          selectedKeys={selectedKeys}
-          onSelectionChange={setSelectedKeys as any}
+    <div className=" flex  gap-4 py-1  h-fit  justify-between">
+      <div className="flex md:flex-col justify-between items-center gap-2 ">
+        <p className="text-xs md:text-sm font-bold text-gray-400">
+          Difficulty:
+        </p>
+        <Dropdown size="sm">
+          <DropdownTrigger>
+            <Button
+              variant="bordered"
+              className="capitalize font-semibold text-xs md:text-sm py-2 px-3 md:px-4 max-w-[30px] h-[32px] md:h-[37px]  outline-none"
+            >
+              {selectedValue}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu
+            aria-label="Single selection example"
+            variant="light"
+            disallowEmptySelection
+            selectionMode="single"
+            selectedKeys={selectedKeys}
+            onSelectionChange={setSelectedKeys as any}
+          >
+            <DropdownItem onClick={() => onNewGame('easy')} key="easy">
+              Easy
+            </DropdownItem>
+            <DropdownItem onClick={() => onNewGame('medium')} key="medium">
+              Medium
+            </DropdownItem>
+            <DropdownItem onClick={() => onNewGame('hard')} key="hard">
+              Hard
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+      <div className="flex  h-fit">
+        <button
+          onClick={onSolve}
+          className=" w-fit bg-primary-400 hover:bg-gradient-tr from-slate-100 shadow-md text-white font-medium py-2 px-5 hover:ring-2 hover:ring-blue-700/30 rounded-xl text-xs md:text-sm transition-all duration-400 hover:scale-[1.01] active:scale-[1.03] hover:text-gray-200"
         >
-          <DropdownItem onClick={() => onNewGame('easy')} key="easy">
-            Easy
-          </DropdownItem>
-          <DropdownItem onClick={() => onNewGame('medium')} key="medium">
-            Medium
-          </DropdownItem>
-          <DropdownItem onClick={() => onNewGame('hard')} key="hard">
-            Hard
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <button
-        onClick={onSolve}
-        className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-      >
-        Solve
-      </button>
+          Solve
+        </button>
+      </div>
     </div>
   );
 };
