@@ -151,17 +151,17 @@ const useCandyCrush = () => {
   };
 
   const dragStart = (e: DragEvent<HTMLImageElement>) => {
-    console.log('Drag Start', e);
+    // console.log('Drag Start', e);
     setSquareBeingDragged(e.target as HTMLImageElement);
   };
 
   const dragDrop = (e: DragEvent<HTMLImageElement>) => {
-    console.log('Drag Drop', e);
+    // console.log('Drag Drop', e);
     setSquareBeingReplaced(e.target as HTMLImageElement);
   };
 
   const dragOrTouchEnd = () => {
-    console.log('Drag End');
+    // console.log('Drag End');
     const squareBeingDraggedID = Number(
       squareBeingDragged?.getAttribute('data-id')
     );
@@ -171,16 +171,16 @@ const useCandyCrush = () => {
 
     if (squareBeingDraggedID === squareBeingReplacedID) return;
 
-    console.log(
-      'SquareBeingDraggedID',
-      squareBeingDragged,
-      squareBeingDraggedID
-    );
-    console.log(
-      'SquareBeingReplacedID',
-      squareBeingReplaced,
-      squareBeingReplacedID
-    );
+    // console.log(
+    //   'SquareBeingDraggedID',
+    //   squareBeingDragged,
+    //   squareBeingDraggedID
+    // );
+    // console.log(
+    //   'SquareBeingReplacedID',
+    //   squareBeingReplaced,
+    //   squareBeingReplacedID
+    // );
 
     const validMoves = [
       squareBeingDraggedID - 1,
@@ -225,7 +225,7 @@ const useCandyCrush = () => {
 
   // For touch screen support
   const touchStart = (e: TouchEvent<HTMLImageElement>) => {
-    console.log('Touch Start', e);
+    // console.log('Touch Start', e);
     setSquareBeingDragged(e.target as HTMLImageElement);
   };
 
@@ -233,6 +233,7 @@ const useCandyCrush = () => {
     e.preventDefault();
     const touch = e.touches[0];
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    // console.log('touch target: ', target);
     if (target && target.getAttribute('data-id')) {
       setSquareBeingReplaced(target as HTMLImageElement);
     }
@@ -269,6 +270,8 @@ const useCandyCrush = () => {
       top: `${touch.clientY - 35}px`,
       pointerEvents: 'none',
     });
+
+    dragOrTouchEnd();
   };
 
   useEffect(() => {
@@ -283,6 +286,10 @@ const useCandyCrush = () => {
       checkForRowOfThree();
       moveIntoSquareBelow();
       setCurrentColorArrangement([...currentColorArrangement]);
+      setDraggingElementStyles({
+        ...draggingElementStyles,
+        display: 'block',
+      });
     }, 100);
     return () => clearInterval(timer);
   }, [currentColorArrangement]);

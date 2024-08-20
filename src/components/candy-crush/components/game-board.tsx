@@ -40,7 +40,7 @@ const GameBoard = ({
             onDragEnd={dragOrTouchEnd}
             onTouchStart={touchStart}
             onTouchMove={touchMove}
-            onTouchEnd={dragOrTouchEnd}
+            // onTouchEnd={dragOrTouchEnd}
             style={index === squareBeingDraggedId ? draggingElementStyles : {}}
           />
         </div>

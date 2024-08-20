@@ -59,23 +59,23 @@ const useHangman = () => {
     switch (level) {
       case 'easy':
         filteredWords = words.filter((w) => w.length <= 6);
-        console.log(
-          `filteredWords: ${filteredWords.length} Total words: ${words.length}`
-        );
+        // console.log(
+        //   `filteredWords: ${filteredWords.length} Total words: ${words.length}`
+        // );
         return filteredWords[Math.floor(Math.random() * filteredWords.length)];
 
       case 'medium':
         filteredWords = words.filter((w) => w.length <= 7 && w.length >= 4);
-        console.log(
-          `filteredWords: ${filteredWords.length} Total words: ${words.length}`
-        );
+        // console.log(
+        //   `filteredWords: ${filteredWords.length} Total words: ${words.length}`
+        // );
         return filteredWords[Math.floor(Math.random() * filteredWords.length)];
 
       case 'hard':
         filteredWords = words.filter((w) => w.length >= 4);
-        console.log(
-          `filteredWords: ${filteredWords.length} Total words: ${words.length}`
-        );
+        // console.log(
+        //   `filteredWords: ${filteredWords.length} Total words: ${words.length}`
+        // );
         return filteredWords[Math.floor(Math.random() * filteredWords.length)];
 
       default:
@@ -104,28 +104,28 @@ const useHangman = () => {
 
   const fillGuessedLettersForLevelOfGame = useCallback(
     async (word: string) => {
-      console.log(
-        'fillGuessedLettersForLevelOfGame: ',
-        level,
-        word,
-        wordToGuess,
-        word === wordToGuess
-      );
+      // console.log(
+      //   'fillGuessedLettersForLevelOfGame: ',
+      //   level,
+      //   word,
+      //   wordToGuess,
+      //   word === wordToGuess
+      // );
 
       if (word === wordToGuess) {
-        console.log('fillGuessedLettersForLevelOfGame: Inside CORRECT');
+        // console.log('fillGuessedLettersForLevelOfGame: Inside CORRECT');
         word = await getWord();
         setWordToGuess(word);
-        console.log(word, wordToGuess);
+        // console.log(word, wordToGuess);
       }
 
       switch (level) {
         case 'easy':
-          console.log(
-            'fillGuessedLettersForLevelOfGame: Inside EASY',
-            word.length,
-            word
-          );
+          // console.log(
+          //   'fillGuessedLettersForLevelOfGame: Inside EASY',
+          //   word.length,
+          //   word
+          // );
           if (word.length > 4) {
             setGuessedLetters(getRandomLetterToFill(word, 3));
           } else if (word.length == 4) {
@@ -135,11 +135,11 @@ const useHangman = () => {
           }
           break;
         case 'medium':
-          console.log(
-            'fillGuessedLettersForLevelOfGame: Inside MEDIUM',
-            word.length,
-            word
-          );
+          // console.log(
+          //   'fillGuessedLettersForLevelOfGame: Inside MEDIUM',
+          //   word.length,
+          //   word
+          // );
           if (word.length > 5) {
             setGuessedLetters(getRandomLetterToFill(word, 3));
           } else if (word.length == 5) {
@@ -149,11 +149,11 @@ const useHangman = () => {
           }
           break;
         case 'hard':
-          console.log(
-            'fillGuessedLettersForLevelOfGame: Inside HARD',
-            word.length,
-            word
-          );
+          // console.log(
+          //   'fillGuessedLettersForLevelOfGame: Inside HARD',
+          //   word.length,
+          //   word
+          // );
           if (word.length > 8) {
             setGuessedLetters(getRandomLetterToFill(word, 3));
           } else if (word.length <= 8 && word.length > 5) {
@@ -166,7 +166,7 @@ const useHangman = () => {
           break;
       }
 
-      console.log('fillGuessedLettersForLevelOfGame: ', word);
+      // console.log('fillGuessedLettersForLevelOfGame: ', word);
     },
     [wordToGuess, level, getRandomLetterToFill]
   );
@@ -174,7 +174,7 @@ const useHangman = () => {
   const handleChangeLevel = useCallback(
     async (level: LevelType) => {
       setScoreBoard(intialScoreBoard);
-      console.log('handleChangeLevel: ', level);
+      // console.log('handleChangeLevel: ', level);
       switch (level) {
         case 'easy':
           fillGuessedLettersForLevelOfGame(wordToGuess);
@@ -201,8 +201,8 @@ const useHangman = () => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const key = e.key;
-      console.log(`key : ${key}`);
-      console.log(`isWinner: ${isWinner} isLoser: ${isLoser}`);
+      // console.log(`key : ${key}`);
+      // console.log(`isWinner: ${isWinner} isLoser: ${isLoser}`);
       if (key === 'Enter' && (isWinner || isLoser)) {
         handleStartGame();
       }
@@ -227,7 +227,7 @@ const useHangman = () => {
     calculateScoreBoard();
   }, [calculateScoreBoard]);
 
-  console.log('render: ', guessedLetters, wordToGuess, level);
+  // console.log('render: ', guessedLetters, wordToGuess, level);
 
   return {
     isWinner,
