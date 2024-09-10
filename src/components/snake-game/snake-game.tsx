@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import { SiteLayout } from '@/layout';
 import GameBoard from './components/GameBoard';

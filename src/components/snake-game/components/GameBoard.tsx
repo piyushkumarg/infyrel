@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Snake from './Snake';
 import Food from './Food';
 import useSnakeGame, { GameModeType } from '../hooks/useSnakeGame';
+import Controller from './controller';
 
 const GameBoard: React.FC = () => {
   const gameBoardRef = useRef<HTMLDivElement>(null);
@@ -16,12 +17,15 @@ const GameBoard: React.FC = () => {
     highScore,
     mode,
     setMode,
+    handleSnakeMove,
   } = useSnakeGame(gameBoardRef);
+
   useEffect(() => {
     if (gameBoardRef.current) {
       gameBoardRef.current.focus();
     }
   }, []);
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!isRunning) {
       toggleGame();
@@ -43,6 +47,9 @@ const GameBoard: React.FC = () => {
       >
         <Snake snakeDots={snakeDots} />
         <Food dot={food} />
+        <div className="absolute bottom-1 right-1">
+          <Controller moveSnake={handleSnakeMove} />
+        </div>
       </div>
       <div className="flex justify-between max-w-[550px] items-center w-full">
         <button

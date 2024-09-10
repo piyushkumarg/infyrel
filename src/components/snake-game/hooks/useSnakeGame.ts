@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export type GameModeType = 'easy' | 'medium' | 'hard';
+export type DirectionType = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 const useSnakeGame = (gameBoardRef: React.RefObject<HTMLDivElement>) => {
   const [snakeDots, setSnakeDots] = useState([
@@ -178,6 +179,13 @@ const useSnakeGame = (gameBoardRef: React.RefObject<HTMLDivElement>) => {
     }
   };
 
+  const handleSnakeMove = (direction: DirectionType) => {
+    if (!isRunning) {
+      toggleGame();
+    }
+    setDirection(direction);
+  };
+
   const toggleGame = () => {
     if (gameBoardRef.current) {
       gameBoardRef.current.focus();
@@ -195,6 +203,7 @@ const useSnakeGame = (gameBoardRef: React.RefObject<HTMLDivElement>) => {
     highScore,
     mode,
     setMode,
+    handleSnakeMove,
   };
 };
 
