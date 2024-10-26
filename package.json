@@ -11,17 +11,22 @@
     "format": "npx prettier . --write"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.4.6",
-    "framer-motion": "^11.3.19",
+    "@nextui-org/react": "2.4.6",
+    "@reduxjs/toolkit": "2.3.0",
+    "framer-motion": "11.3.19",
     "next": "14.2.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-icons": "^5.3.0"
+    "react": "18",
+    "react-dom": "18",
+    "react-icons": "5.3.0",
+    "react-redux": "9.1.2",
+    "styled-components": "6.1.13",
+    "universal-cookie": "7.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "husky": "^9.0.11",

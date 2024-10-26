@@ -1,6 +1,6 @@
-# [Khel Mitra](https://khel-mitra.vercel.app/)
+# [infyrel](https://khel-mitra.vercel.app/)
 
-Welcome to Khel Mitra, your ultimate gaming companion! Dive into a world of games like Tic-Tac-Toe, Sudoku, Snake, 2048, and many more. Challenge your mind, have fun, and connect with friends. Dive into endless entertainment and make every game an exciting adventure with Khel Mitra!
+Welcome to infyrel, your ultimate gaming companion! Dive into a world of games like Tic-Tac-Toe, Sudoku, Snake, 2048, and many more. Challenge your mind, have fun, and connect with friends. Dive into endless entertainment and make every game an exciting adventure with infyrel Khel!
 
 ## Table of Contents
 
@@ -11,12 +11,12 @@ Welcome to Khel Mitra, your ultimate gaming companion! Dive into a world of game
 
 ## Installation
 
-To get started with Khel Mitra, follow these steps:
+To get started with infyrel, follow these steps:
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/piyushkumarg/khel-mitra.git
+   git clone https://github.com/piyushkumarg/infyrel.git
    cd khel-mitra
    ```
 
